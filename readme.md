@@ -43,13 +43,14 @@ or download the zip from the green button at the beginning of the repository
 - Execute command: `yarn` or `npm run`
 
 - Run the command to enter developer mode `yarn dev` or `npm run dev`
-
 - Project running at:
   - http://192.168.138.51:8080
   - http://localhost:8080
 
 ## 🗃 Release history
 
+- 0.0.2
+    - Finish project and studying the possibility of adding `new resources`
 - 0.0.1
   - Work in progress
 
