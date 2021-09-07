@@ -1,44 +1,55 @@
 import "./style.css";
 import * as THREE from "three";
-import gsap from "gsap";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+
+// Canvas
+const canvas = document.querySelector(".webgl");
+
+// Sizes
+const sizes = {
+  width: window.innerWidth,
+  height: window.innerHeight,
+};
 
 // Scene
 const scene = new THREE.Scene();
 
-// Blue Cube
-const geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-const material = new THREE.MeshBasicMaterial({ color: 0x007de7 });
-const mesh = new THREE.Mesh(geometry, material);
+// Object
+const mesh = new THREE.Mesh(
+  new THREE.BoxGeometry(2, 2, 2, 4, 4, 4),
+  new THREE.MeshBasicMaterial({ color: 0x0075ff })
+);
 scene.add(mesh);
 
-// Sizes
-const sizes = {
-  width: 800,
-  height: 600,
-};
-
 // Camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
+const camera = new THREE.PerspectiveCamera(
+  120,
+  sizes.width / sizes.height,
+  0.1,
+  100
+);
+
 camera.position.z = 4;
 scene.add(camera);
 
+// Controls
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+
 // Renderer
-const canvas = document.querySelector(".webgl");
 const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
 });
 renderer.setSize(sizes.width, sizes.height);
 
-// gsap library
-gsap.to(mesh.position, { duration: 2, delay: 1, x: 3, y: 3 });
-gsap.to(mesh.rotation, { duration: 2, delay: 1, x: 3, y: 3 });
-gsap.to(mesh.position, { duration: 2, delay: 2, x: 0, y: 0 });
-gsap.to(mesh.rotation, { duration: 2, delay: 2, x: 0, y: 0 });
-
-// Animations
 const tick = () => {
+  // Update controls
+  controls.update();
+
   // Render
   renderer.render(scene, camera);
+
+  // Call tick again on the next frame
   window.requestAnimationFrame(tick);
 };
 
